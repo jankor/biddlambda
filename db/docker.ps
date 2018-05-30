@@ -1,1 +1,1 @@
-docker run -e ARANGO_ROOT_PASSWORD=somepassword -p 8529:8529 -d -v /var/arangodb:/var/lib/arangodb3 arangodb
+docker run --rm -p 3306:3306 --name bidd-database -e MYSQL_ROOT_PASSWORD=pw -v /var/data/mysql:/var/lib/mysql -d mysql:8

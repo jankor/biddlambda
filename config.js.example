@@ -1,8 +1,8 @@
 module.exports = {
-  arangodb: {
-    url: "url",
+  mysql: {
+    host: "",
     db: "bidd",
-    pw: "pass",
-    user: "user",
+    user: "",
+    pw: ""
   }
 }

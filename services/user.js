@@ -1,16 +1,12 @@
-exports.init = (db, aql) => {
+exports.init = (db, userMapper) => {
   return {
-    getUser: async (key, token) => {
-      const cursor = await db.query(aql`
-        FOR u IN users
-        FILTER u._key == ${key} && ${token} IN u.token
-        RETURN u`
-      );
-      return await cursor.next();
+    getUser: async (token) => {
+      const result = await db.execute('SELECT * FROM users WHERE token = ?', [token]);
+      return result[0];
     },
-    insertUser: async (userDocument) => {
-      const cursor = await db.query(aql`INSERT ${userDocument.newGuest()} IN users RETURN NEW`);
-      return await cursor.next();
+    insertUser: async (token) => {
+      const result = await db.execute('INSERT INTO users (token) VALUES(?)', [token]);
+      return {token};
     },
   }
 }

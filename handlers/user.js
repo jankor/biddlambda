@@ -1,14 +1,15 @@
 'use strict';
-const arango = require("../services/arango");
-const aql = require("arangojs").aql;
-const userDocument = require('../objects/user.js');
+var randtoken = require('rand-token');
+const dbService = require("../services/mysql");
+const userMapper = require('../mappers/user.js');
 const userServiceFactory = require('../services/user');
 
 exports.getUser = async (request, response) => {
-  const userService = userServiceFactory.init(arango.getInstance(), aql);
+  const db = await dbService.getInstance();
+  const userService = userServiceFactory.init(db, userMapper);
   try {
     return response.status(200).json(
-      await userService.getUser(request.params.key, request.params.token)
+      await userService.getUser(request.params.token)
     );
   } catch (e) {
     console.log(e)
@@ -17,10 +18,11 @@ exports.getUser = async (request, response) => {
 };
 
 exports.createUser = async (request, response) => {
-  const userService = userServiceFactory.init(arango.getInstance(), aql);
+  const db = await dbService.getInstance();
+  const userService = userServiceFactory.init(db, userMapper);
   try {
     return response.status(200).json(
-      await userService.insertUser(userDocument)
+      await userService.insertUser(randtoken.generate(32))
     );
   } catch (e) {
     console.log(e)

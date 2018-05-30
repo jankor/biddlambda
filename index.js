@@ -5,7 +5,7 @@ var app = express()
  
 app.get('/', (req, res) => res.send('OK'));
 
-app.get('/user/:key/:token', user.getUser)
+app.get('/user/:token', user.getUser)
 app.get('/user', user.createUser)
 
 app.listen(8080)
