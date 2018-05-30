@@ -4,5 +4,9 @@ module.exports = {
     db: "bidd",
     user: "",
     pw: ""
+  },
+  facebook: {
+    appId: "",
+    appSecret: "",
   }
 }
